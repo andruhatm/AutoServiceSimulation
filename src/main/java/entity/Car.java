@@ -15,7 +15,7 @@ public class Car {
 	private final int transportTime;
 
 	public Car() {
-		this.repairTime = ThreadLocalRandom.current().nextInt(2,5);
+		this.repairTime = ThreadLocalRandom.current().nextInt(2,7);
 		this.transportTime = ThreadLocalRandom.current().nextInt(2,4);
 		this.brand = BrandEnum.values()[ThreadLocalRandom.current().nextInt(1,4)];
 		this.color = new Color(
