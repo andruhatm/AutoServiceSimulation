@@ -7,7 +7,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class TowTruckWorker implements Runnable{
+public class CarsGenerator implements Runnable{
 
 	private AutoService autoService;
 
@@ -15,7 +15,7 @@ public class TowTruckWorker implements Runnable{
 
 	private ArrayList<TowTruck> towTrucks;
 
-	public TowTruckWorker(AutoService autoService,int towTrucksCount) {
+	public CarsGenerator(AutoService autoService, int towTrucksCount) {
 		this.autoService = autoService;
 		towTrucks = new ArrayList<>(towTrucksCount);
 		carsToDeliver = new ArrayDeque<>();

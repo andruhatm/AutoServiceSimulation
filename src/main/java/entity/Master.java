@@ -18,10 +18,10 @@ public class Master extends Thread{
 	@Override
 	public void run() {
 		working = true;
+		Connection connection = Connect.connect();
 		try {
 			Thread.sleep(carToRepair.getRepairTime()*1000);
 			logRepairedCar();
-			Connection connection = Connect.connect();
 			PreparedStatement statement = connection.prepareStatement("INSERT INTO \"repaired_cars\"(\"brand\",\"color\",\"repairtime\",\"delivertime\") VALUES (?,?,?,?);");
 			statement.setString(1,this.carToRepair.getBrand().name());
 			statement.setString(2,this.carToRepair.getColor().toString());
@@ -29,7 +29,13 @@ public class Master extends Thread{
 			statement.setInt(4,this.carToRepair.getTransportTime());
 			statement.execute();
 			working = false;
+			connection.close();
 		} catch (InterruptedException | SQLException e) {
+			try {
+				connection.close();
+			} catch (SQLException exception) {
+				exception.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 	}

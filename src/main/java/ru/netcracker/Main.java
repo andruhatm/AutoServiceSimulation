@@ -1,6 +1,6 @@
 package ru.netcracker;
 
-import org.flywaydb.core.Flyway;
+import java.util.List;
 
 public class Main {
 	public static void main(String[] args) {
@@ -12,19 +12,15 @@ public class Main {
 //		Написать приложение(консольное), эмулирующее работу такого автосервиса.
 //		Входные данные: количество эвакуаторов, вместимость парковки, количество мастеров
 
-		Flyway flyway = Flyway.configure()
-						.dataSource("jdbc:postgresql://localhost:5432/autoService","postgres","кщще")
-						.locations("/db.migration")
-						.load();
-		flyway.clean();
-		flyway.migrate();
 
-		AutoService autoService = new AutoService(Integer.parseInt(args[0]));
-		TowTruckWorker truckWorker = new TowTruckWorker(autoService,Integer.parseInt(args[1]));
-		MasterWorker masterWorker = new MasterWorker(autoService,Integer.parseInt(args[2]));
+
+		AppInitializer initializer = new AppInitializer();
+		List<Integer> values = initializer.getValues();
+		AutoService autoService = new AutoService(values.get(0));
+		CarsGenerator truckWorker = new CarsGenerator(autoService,values.get(1));
+		MasterWorker masterWorker = new MasterWorker(autoService,values.get(2));
 		new Thread(truckWorker).start();
 		new Thread(masterWorker).start();
-
 
 	}
 }
